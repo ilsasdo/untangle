@@ -1,8 +1,6 @@
 package untangle;
 
 import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Assert;
@@ -75,18 +73,6 @@ public class UntangleTest {
     }
 
     private File findTestLibJar() {
-        try {
-            ClassLoader cl = ClassLoader.getSystemClassLoader();
-            URL[] urls = ((URLClassLoader) cl).getURLs();
-            for (URL url : urls) {
-                if (url.getFile().endsWith("testlib.jar")) {
-                    return new File(url.toURI());
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        throw new RuntimeException("testlib.jar not found");
+        return new File("testlib/build/libs/testlib.jar");
     }
 }

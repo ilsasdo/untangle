@@ -1,10 +1,14 @@
 plugins {
     id 'java-library'
+    id 'org.jreleaser' version '1.0.0-M3'
 }
 
 repositories {
     mavenCentral()
 }
+
+project.version = "1.0"
+project.group = "untangle"
 
 task fatJar(type: Jar, group: 'build') {
     manifest {
