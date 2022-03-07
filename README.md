@@ -12,6 +12,10 @@ With **untangle** you can inspect all the jars and classes to find the usage of 
 
 [![build](https://github.com/ilsasdo/untangle/actions/workflows/build.yml/badge.svg)](https://github.com/ilsasdo/untangle/actions/workflows/build.yml)
 
+## Download
+
+[Download the Latest Version](https://github.com/ilsasdo/untangle/releases/download/v1.0/untangle.jar)
+
 ## Usage
 
 ```shell
