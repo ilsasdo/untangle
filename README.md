@@ -10,7 +10,7 @@ With **untangle** you can inspect all the jars and classes to find the usage of 
 
 ---
 
-[![build](https://github.com/ilsasdo/untangle/actions/workflows/gradle.yml/badge.svg)](https://github.com/ilsasdo/untangle/actions/workflows/gradle.yml)
+[![build](https://github.com/ilsasdo/untangle/actions/workflows/build.yml/badge.svg)](https://github.com/ilsasdo/untangle/actions/workflows/build.yml)
 
 ## Usage
 
