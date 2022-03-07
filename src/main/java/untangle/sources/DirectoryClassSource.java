@@ -28,7 +28,7 @@ public class DirectoryClassSource implements ClassSource {
     }
 
     @Override
-    public Iterator<InputStream> iterator() {
+    public Iterator<Source> iterator() {
         try {
             return new DirectoryIterator(this.directory);
         } catch (IOException e) {
@@ -36,7 +36,7 @@ public class DirectoryClassSource implements ClassSource {
         }
     }
 
-    private static class DirectoryIterator implements Iterator<InputStream> {
+    private static class DirectoryIterator implements Iterator<Source> {
 
         private final Iterator<Path> files;
 
@@ -52,9 +52,9 @@ public class DirectoryClassSource implements ClassSource {
         }
 
         @Override
-        public InputStream next() {
+        public Source next() {
             try {
-                return new FileInputStream(files.next().toFile());
+                return new Source(files.next().toFile());
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

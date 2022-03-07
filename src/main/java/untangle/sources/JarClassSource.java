@@ -2,7 +2,6 @@ package untangle.sources;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.jar.JarEntry;
@@ -17,7 +16,7 @@ public class JarClassSource implements ClassSource {
     }
 
     @Override
-    public Iterator<InputStream> iterator() {
+    public Iterator<Source> iterator() {
         try {
             return new JarIterator(jar);
         } catch (IOException e) {
@@ -25,13 +24,15 @@ public class JarClassSource implements ClassSource {
         }
     }
 
-    private static class JarIterator implements Iterator<InputStream> {
+    private static class JarIterator implements Iterator<Source> {
 
+        private final File jarFile;
         private final JarFile jar;
         private final Enumeration<JarEntry> entries;
         private JarEntry currentEntry;
 
         public JarIterator(File jar) throws IOException {
+            this.jarFile = jar;
             this.jar = new JarFile(jar);
             this.entries = this.jar.entries();
         }
@@ -49,9 +50,9 @@ public class JarClassSource implements ClassSource {
         }
 
         @Override
-        public InputStream next() {
+        public Source next() {
             try {
-                return this.jar.getInputStream(currentEntry);
+                return new Source(jarFile, jar.getInputStream(currentEntry));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

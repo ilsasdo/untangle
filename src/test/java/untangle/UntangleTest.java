@@ -66,7 +66,10 @@ public class UntangleTest {
     public void multiple_sources() {
         File file = findTestLibJar();
         Untangle untangle = new Untangle(new ClassNameMatcher("untangletestlib.Address"),
-            new MultipleClassSource(Arrays.asList(file.getAbsolutePath(), "build/classes/java/test/test/PersonPrinter.class", "build/classes/java/test")));
+            new MultipleClassSource(Arrays.asList(
+                file.getAbsolutePath(),
+                "build/classes/java/test/test/PersonPrinter.class",
+                "build/classes/java/test")));
         List<Usage> usages = untangle.findUsages();
         Assert.assertEquals("find usages of Person class", 2, usages.size());
     }

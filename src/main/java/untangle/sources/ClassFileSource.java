@@ -1,10 +1,7 @@
 package untangle.sources;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -22,11 +19,11 @@ public class ClassFileSource implements ClassSource {
     }
 
     @Override
-    public Iterator<InputStream> iterator() {
+    public Iterator<Source> iterator() {
         return new SingleFileIterator(classFile);
     }
 
-    private static class SingleFileIterator implements Iterator<InputStream> {
+    private static class SingleFileIterator implements Iterator<Source> {
 
         private final Iterator<File> iterator;
 
@@ -40,9 +37,9 @@ public class ClassFileSource implements ClassSource {
         }
 
         @Override
-        public InputStream next() {
+        public Source next() {
             try {
-                return new BufferedInputStream(new FileInputStream(iterator.next()));
+                return new Source(iterator.next());
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

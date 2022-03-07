@@ -1,7 +1,6 @@
 package untangle.sources;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,14 +24,14 @@ public class MultipleClassSource implements ClassSource {
     }
 
     @Override
-    public Iterator<InputStream> iterator() {
+    public Iterator<Source> iterator() {
         return new MultiIterator(sources);
     }
 
-    private static class MultiIterator implements Iterator<InputStream> {
+    private static class MultiIterator implements Iterator<Source> {
 
         private final Iterator<ClassSource> sources;
-        private Iterator<InputStream> currentSource;
+        private Iterator<Source> currentSource;
 
         public MultiIterator(List<ClassSource> sources) {
             this.sources = sources.iterator();
@@ -40,7 +39,7 @@ public class MultipleClassSource implements ClassSource {
 
         @Override
         public boolean hasNext() {
-            if (this.currentSource == null || !this.currentSource.hasNext()) {
+            if (this.currentSource == null) {
                 if (this.sources.hasNext()) {
                     this.currentSource = this.sources.next().iterator();
                 } else {
@@ -48,11 +47,20 @@ public class MultipleClassSource implements ClassSource {
                 }
             }
 
-            return this.currentSource.hasNext();
+            if (this.currentSource.hasNext()) {
+                return true;
+            } else {
+                if (this.sources.hasNext()) {
+                    this.currentSource = this.sources.next().iterator();
+                    return this.currentSource.hasNext();
+                } else {
+                    return false;
+                }
+            }
         }
 
         @Override
-        public InputStream next() {
+        public Source next() {
             return this.currentSource.next();
         }
     }

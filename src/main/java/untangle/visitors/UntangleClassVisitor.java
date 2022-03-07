@@ -9,15 +9,23 @@ import untangle.filters.Matcher;
 
 public class UntangleClassVisitor extends ClassVisitor {
 
-    private final UntangleMethodVisitor methodVisitor;
+    private UntangleMethodVisitor methodVisitor;
+    private final Matcher matcher;
+    private final String fileSource;
 
-    public UntangleClassVisitor(Matcher filter) {
+    public UntangleClassVisitor(Matcher filter, String fileSource) {
         super(Opcodes.ASM6);
-        this.methodVisitor = new UntangleMethodVisitor(filter);
+        this.matcher = filter;
+        this.fileSource = fileSource;
     }
 
     public List<Usage> getUsages() {
         return this.methodVisitor.getUsages();
+    }
+
+    @Override
+    public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+        this.methodVisitor = new UntangleMethodVisitor(matcher, fileSource, name);
     }
 
     @Override

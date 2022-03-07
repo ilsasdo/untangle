@@ -8,6 +8,7 @@ import java.util.List;
 import org.objectweb.asm.ClassReader;
 import untangle.filters.Matcher;
 import untangle.sources.ClassSource;
+import untangle.sources.Source;
 import untangle.visitors.UntangleClassVisitor;
 
 public class Untangle {
@@ -26,10 +27,10 @@ public class Untangle {
 
     private List<Usage> findUsages(Matcher filter, ClassSource sources) {
         List<Usage> usages = new ArrayList<>();
-        for (InputStream stream : sources) {
-            try (InputStream classStream = new BufferedInputStream(stream)) {
+        for (Source source : sources) {
+            try (InputStream classStream = new BufferedInputStream(source.getInputStream())) {
                 ClassReader reader = new ClassReader(classStream);
-                UntangleClassVisitor appClassVisitor = new UntangleClassVisitor(filter);
+                UntangleClassVisitor appClassVisitor = new UntangleClassVisitor(filter, source.getName());
                 reader.accept(appClassVisitor, 0);
                 usages.addAll(appClassVisitor.getUsages());
             } catch (IOException e) {
