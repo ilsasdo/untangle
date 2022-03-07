@@ -8,6 +8,9 @@ But you need to make modifications and refactors and you *know* that something w
 
 With **untangle** you can inspect all the jars and classes to find the usage of your libraries to check what you can or can't change.
 
+---
+
+[![CircleCI](https://circleci.com/gh/ilsasdo/untangle/tree/main.svg?style=svg)](https://circleci.com/gh/ilsasdo/untangle/tree/main)
 
 ## Usage
 
